@@ -2,7 +2,7 @@
 
 <kbd>
 <a href="https://free-wallpapers.vercel.app">
-  <img alt="Next.js Starter Boilerplate!" src="https://free-wallpapers.vercel.app/opengraph-image.png">
+  <img src="https://free-wallpapers.vercel.app/opengraph-image.png">
 </a>
 </kbd>
 
