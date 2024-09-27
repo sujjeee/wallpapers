@@ -1,31 +1,23 @@
 import { NextResponse } from "next/server"
-import axios from "axios"
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const imageUrl = searchParams.get("url")
-
-  if (!imageUrl) {
-    return NextResponse.json(
-      { error: "Missing url parameter" },
-      { status: 400 },
-    )
-  }
-
   try {
-    const response = await axios.get(imageUrl, {
-      responseType: "arraybuffer",
-    })
+    const response = await fetch(
+      "https://storage.googleapis.com/panels-api/data/20240916/media-1a-i-p~s",
+      { next: { revalidate: 3600 } },
+    )
 
-    const contentType = response.headers["content-type"]
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
 
-    return new NextResponse(response.data, {
-      status: 200,
-      headers: {
-        "Content-Type": contentType,
-        "Cache-Control": "public, max-age=3600",
-      },
-    })
+    const data = await response.json()
+
+    const images = Object.values(data.data)
+      .map((item: any) => item.dhd || item.s)
+      .filter((url): url is string => typeof url === "string") //
+
+    return NextResponse.json({ images })
   } catch (error) {
     console.error("Error proxying image:", error)
     return NextResponse.json({ error: "Error proxying image" }, { status: 500 })
