@@ -1,14 +1,12 @@
-import type { Metadata } from "next"
-import localFont from "next/font/local"
 import "./globals.css"
-import { Providers } from "@/components/providers"
+import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Disclaimer } from "@/components/disclaimer"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Free Wallpapers",
+  title: "Panels Wallpapers",
 }
 
 export default function RootLayout({
@@ -19,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <main className="container max-w-screen-xl">{children}</main>
         <div className="fixed bottom-1 right-2 z-50 sm:bottom-2 sm:right-4">
           <Disclaimer />
         </div>
