@@ -26,9 +26,8 @@ export function Disclaimer() {
             web scraping and proxy techniques.
           </span>
           <span>
-            The images are accessed through publicly available media using the
-            Panels app's own API. It does not engage in any shady or illegal
-            activities.
+            The images are accessed through publicly available media using
+            MKBHD's Panels app API.
           </span>
           <span>
             Built by{" "}
