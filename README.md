@@ -1,4 +1,4 @@
-# MKBSD Panels Wallpapers!
+# MKBHD Panels Wallpapers!
 
 <kbd>
 <a href="https://panels-art.vercel.app">
