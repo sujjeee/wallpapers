@@ -1,15 +1,17 @@
 "use client"
 
 import React from "react"
-import useVirtualScroll from "@/hooks/use-virtual-scroll"
+import { useInfiniteScroll } from "@/hooks/use-virtual-scroll"
 import { useInView } from "react-intersection-observer"
 import { ImageShell } from "@/components/image-shell"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function HomePage() {
   const [images, setImages] = React.useState<string[]>([])
-  const { displayedItems, loadMore } = useVirtualScroll(images)
   const [loading, setLoading] = React.useState<boolean>(true)
+  const { displayedImages, loadMore } = useInfiniteScroll({
+    images: images,
+  })
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -59,7 +61,7 @@ export default function HomePage() {
                 </div>
               )
             })
-          : displayedItems.map((imageUrl, idx) => (
+          : displayedImages.map((imageUrl, idx) => (
               <ImageShell imageUrl={imageUrl} idx={idx} key={idx} />
             ))}
         <div ref={ref} style={{ height: "10px", background: "transparent" }} />

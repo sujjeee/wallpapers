@@ -1,21 +1,33 @@
-"use client"
-
 import { useState, useEffect, useCallback } from "react"
 
-const useVirtualScroll = (allItems: string[], itemsPerPage = 10) => {
-  const [displayedItems, setDisplayedItems] = useState<string[]>([])
+interface useInfiniteScrollProps {
+  images: string[]
+  perPage?: number
+}
+
+export function useInfiniteScroll({
+  images,
+  perPage = 10,
+}: useInfiniteScrollProps) {
+  const [displayedImages, setDisplayedImages] = useState<string[]>([])
   const [page, setPage] = useState(1)
 
   useEffect(() => {
-    const end = page * itemsPerPage
-    setDisplayedItems(allItems.slice(0, end))
-  }, [allItems, page, itemsPerPage])
+    const start = (page - 1) * perPage
+    const end = page * perPage
+
+    setDisplayedImages((prevDisplayedImages) => {
+      const newItems = images.slice(start, end)
+      const uniqueItems = newItems.filter(
+        (imageUrl) => !prevDisplayedImages.includes(imageUrl),
+      )
+      return [...prevDisplayedImages, ...uniqueItems]
+    })
+  }, [images, page, perPage])
 
   const loadMore = useCallback(() => {
     setPage((prevPage) => prevPage + 1)
   }, [])
 
-  return { displayedItems, loadMore }
+  return { displayedImages, loadMore }
 }
-
-export default useVirtualScroll
